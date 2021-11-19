@@ -1,6 +1,6 @@
 package com.example.myspacex.data.cloud
 
-import com.example.myspacex.domain.*
+import com.example.myspacex.data.*
 import java.text.DateFormat
 import java.text.ParsePosition
 import java.text.SimpleDateFormat

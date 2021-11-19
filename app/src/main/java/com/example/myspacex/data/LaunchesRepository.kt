@@ -1,4 +1,4 @@
-package com.example.myspacex.domain
+package com.example.myspacex.data
 
 interface LaunchesRepository {
     suspend fun getLaunches(year: String, reload: Boolean = false): List<LaunchData>

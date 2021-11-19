@@ -1,4 +1,4 @@
-package com.example.myspacex.domain
+package com.example.myspacex.data
 
 data class LaunchData(
     val flightNumber: Int,
