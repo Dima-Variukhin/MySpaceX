@@ -16,7 +16,7 @@ class CloudLaunchesDataStore(
         } else {
             val launches: List<LaunchesCloud>
             try {
-                val launchesAsync = launchesService.getLaunches(year)
+                val launchesAsync = launchesService.getLaunchesAsync(year)
                 val result = launchesAsync.await()
                 launches = result.body()!!
                 launchesCache.put(year, launches)
