@@ -34,18 +34,18 @@ class MainActivity : AppCompatActivity(), RetryListener {
         NavigationUI.setupActionBarWithNavController(this, navController)
 
         viewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
-        viewModel.searchState.observe(this, Observer<Pair<Int, String?>> { data ->
+        viewModel.searchState.observe(this) { data ->
             navController.navigate(
                 data.first,
                 Bundle().apply { putString(SearchResultsFragment.EXTRA_YEAR, data.second) }
             )
-        })
-        viewModel.progressState.observe(this, Observer<Boolean> { show ->
+        }
+        viewModel.progressState.observe(this) { show ->
             progressBar.visibility = if (show) View.VISIBLE else View.GONE
-        })
-        viewModel.errorState.observe(this, Observer<Int> { message ->
+        }
+        viewModel.errorState.observe(this) { message ->
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

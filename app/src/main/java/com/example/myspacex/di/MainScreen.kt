@@ -1,25 +1,17 @@
 package com.example.myspacex.di
 
 import android.app.Application
-import android.app.PendingIntent.getService
 import com.example.myspacex.data.LaunchesRepository
-import com.example.myspacex.data.LaunchesRepositoryImpl
 import com.example.myspacex.data.cache.LaunchesCache
-import com.example.myspacex.data.cache.LaunchesCacheImpl
 import com.example.myspacex.data.cloud.LaunchDataMapper
 import com.example.myspacex.data.cloud.LaunchesService
-import com.example.myspacex.data.datasource.CloudLaunchesDataStore
-import com.example.myspacex.data.datasource.DiskLaunchesDataStore
-import com.example.myspacex.data.datasource.LaunchesDataStoreFactoryImpl
+import com.example.myspacex.data.datasource.*
 import com.example.myspacex.domain.*
-import com.example.myspacex.domain.validator.YearValidator
-import java.lang.UnsupportedOperationException
+import com.example.myspacex.domain.validator.Validator
 
 object MainScreen {
-
     private lateinit var config: DI.Config
     private lateinit var launchesCache: LaunchesCache
-
     private var repository: LaunchesRepository? = null
     private var launchDetailsInteractor: LaunchDetailsInteractor? = null
     private var launchesInteractor: LaunchesInteractor? = null
@@ -27,7 +19,7 @@ object MainScreen {
 
     fun initialize(app: Application, configuration: DI.Config = DI.Config.RELEASE) {
         config = configuration
-        launchesCache = LaunchesCacheImpl(app)
+        launchesCache = LaunchesCache.Base(app)
     }
 
     fun getLaunchesInteractorImpl(): LaunchesInteractor {
@@ -36,16 +28,9 @@ object MainScreen {
         return launchesInteractor!!
     }
 
-    fun setLaunchesInteractor(interactor: LaunchesInteractor) =
-        if (config == DI.Config.TEST) {
-            launchesInteractor = interactor
-        } else {
-            throw UnsupportedOperationException("one cannot simply set interactor if not a DI.Config.TEST")
-        }
-
     fun getSearchResultsInteractor(): SearchResultsInteractor {
         if (searchResultsInteractor == null)
-            searchResultsInteractor = SearchResultsInteractorImpl(getLaunchesRepository())
+            searchResultsInteractor = SearchResultsInteractor.Base(getLaunchesRepository())
         return searchResultsInteractor!!
     }
 
@@ -57,26 +42,28 @@ object MainScreen {
 
 
     private fun getLaunchDetailsInteractor(repository: LaunchesRepository) =
-        LaunchDetailsInteractorImpl(repository)
+        LaunchDetailsInteractor.Base(repository)
 
     private fun makeLaunchesInteractor(repository: LaunchesRepository) =
-        LaunchesInteractorImpl(repository, YearValidator())
+        LaunchesInteractor.Base(repository, Validator.Base())
 
     private fun getLaunchesRepository(): LaunchesRepository {
         if (repository == null)
-            repository = LaunchesRepositoryImpl(getLaunchesDataStoreFactory(), LaunchDataMapper())
+            repository = LaunchesRepository.Base(
+                getLaunchesDataStoreFactory(),
+                LaunchDataMapper()
+            )
         return repository!!
     }
 
-    private fun getDiskLaunchesDataStore() = DiskLaunchesDataStore(launchesCache)
-    private fun getCloudLaunchesDataStore() = CloudLaunchesDataStore(
-        NetworkDI.connectionManager,
+    private fun getDiskLaunchesDataStore() = LaunchesDataStore.DiskLaunchesDataStore(launchesCache)
+    private fun getCloudLaunchesDataStore() = LaunchesDataStore.CloudLaunchesDataStore(
         NetworkDI.getService(LaunchesService::class.java),
         launchesCache
     )
 
     private fun getLaunchesDataStoreFactory() =
-        LaunchesDataStoreFactoryImpl(
+        LaunchesDataStoreFactory.Base(
             launchesCache,
             getDiskLaunchesDataStore(),
             getCloudLaunchesDataStore()

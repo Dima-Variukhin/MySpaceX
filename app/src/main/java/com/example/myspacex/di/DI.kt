@@ -10,7 +10,7 @@ object DI {
     }
 
     fun initialize(app: Application, configuration: Config = Config.RELEASE) {
-        NetworkDI.initialize(app)
+        NetworkDI.initialize()
         MainScreen.initialize(app, configuration)
     }
 }

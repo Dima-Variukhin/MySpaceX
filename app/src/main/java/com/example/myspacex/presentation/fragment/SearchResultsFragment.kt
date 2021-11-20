@@ -1,9 +1,7 @@
 package com.example.myspacex.presentation.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -27,10 +25,10 @@ class SearchResultsFragment : BaseFragment(R.layout.fragment_search_results) {
             ViewModelProviders.of(this).get(SearchResultsViewModel::class.java)
         }
         viewModel?.let { model ->
-            model.results.observe(this, Observer<List<String>> {
+            model.results.observe(viewLifecycleOwner) {
                 searchResultsListView.apply {
                     adapter =
-                        ArrayAdapter<String>(context!!, android.R.layout.simple_list_item_1, it)
+                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, it)
                     onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                         Navigation.findNavController(view)
                             .navigate(R.id.details_screen, Bundle().apply {
@@ -42,7 +40,7 @@ class SearchResultsFragment : BaseFragment(R.layout.fragment_search_results) {
                             })
                     }
                 }
-            })
+            }
             model.showResults(
                 arguments?.getString(EXTRA_YEAR) ?: Calendar.getInstance().get(Calendar.YEAR)
                     .toString()

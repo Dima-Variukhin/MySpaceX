@@ -30,9 +30,9 @@ class LaunchDetailsFragment : BaseFragment(R.layout.fragment_launch_details) {
             ViewModelProviders.of(this).get(LaunchDetailsViewModel::class.java)
         }
         viewModel?.let { model ->
-            model.launchData.observe(this, Observer<List<LaunchUi<*>>> {
+            model.launchData.observe(viewLifecycleOwner) {
                 recyclerView.adapter = LaunchDetailsAdapter(it)
-            })
+            }
             model.showData(year!!, position)
         }
     }
