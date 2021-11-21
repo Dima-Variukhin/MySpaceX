@@ -2,13 +2,17 @@ package com.example.myspacex.presentation.adapter
 
 import android.view.View
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.example.myspacex.R
 import com.example.myspacex.presentation.LaunchUi
-import com.squareup.picasso.Picasso
 
 class ImageViewHolder(view: View) : LaunchDetailViewHolder<LaunchUi.Image>(view) {
     private val imageView: ImageView = itemView.findViewById(R.id.imageView)
-    override fun bind(model: Any) = Picasso.get()
-        .load((model as LaunchUi.Image).value)
-        .into(imageView)
+    override fun bind(model: Any) {
+        Glide.with(imageView)
+            .load((model as LaunchUi.Image).value)
+            // .placeholder(R.drawable.ic_launcher_foreground)
+            //  .error(R.drawable.ic_launcher_background)
+            .into(imageView)
+    }
 }

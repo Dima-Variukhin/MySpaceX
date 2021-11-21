@@ -17,8 +17,8 @@ interface LaunchesDataStoreFactory {
         private val cloudLaunchesDataStore: LaunchesDataStore.CloudLaunchesDataStore,
     ) : LaunchesDataStoreFactory {
 
-        override fun create(year: String, priority: LaunchesDataStoreFactory.Priority) =
-            if (priority == LaunchesDataStoreFactory.Priority.CLOUD || !launchesCache.isCached(year))
+        override fun create(year: String, priority: Priority) =
+            if (priority == Priority.CLOUD || !launchesCache.isCached(year))
                 cloudLaunchesDataStore
             else
                 diskLaunchesDataStore

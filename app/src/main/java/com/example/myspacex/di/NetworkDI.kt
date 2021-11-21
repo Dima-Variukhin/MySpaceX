@@ -1,8 +1,10 @@
 package com.example.myspacex.di
 
 import android.app.Application
+import android.content.Context
 import com.example.myspacex.BuildConfig
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import io.realm.Realm
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,8 +22,6 @@ object NetworkDI {
     }
 
     fun <T> getService(className: Class<T>): T = retrofit.create(className)
-
-
 
     private fun getRetrofit(client: OkHttpClient) =
         Retrofit.Builder()

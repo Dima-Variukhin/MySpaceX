@@ -40,7 +40,7 @@ class LaunchDataMapper : Mapper<List<LaunchesCloud>, List<LaunchData>> {
             FirstStageData(rocket.firstStage.cores.map { CoreData(it.coreSerial, it.reused) })
         val secondStage = SecondStageData(
             rocket.secondStage.block,
-            rocket.secondStage.payloads.mapNotNull {
+            rocket.secondStage.payloads.map {
                 PayloadData(
                     it.manufacturer,
                     it.nationality,

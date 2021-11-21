@@ -21,7 +21,7 @@ object MainScreen {
         config = configuration
         launchesCache = LaunchesCache.Base(app)
     }
-
+    
     fun getLaunchesInteractorImpl(): LaunchesInteractor {
         if (config == DI.Config.RELEASE && launchesInteractor == null)
             launchesInteractor = makeLaunchesInteractor(getLaunchesRepository())

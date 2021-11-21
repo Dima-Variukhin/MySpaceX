@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MySpaceX</string>
-    <string name="tutorial">Welcome to MySpaceX launches app. To find some information about SpaceX launches just type the
+    <string name="tutorial">It\'s searching screen. To find some information about SpaceX launches just type the
         year in the action bar.
     </string>
     <string name="no_results">No Results</string>

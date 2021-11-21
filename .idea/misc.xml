@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/layout/fragment_no_results.xml" value="0.15896739130434784" />
         <entry key="app/src/main/res/layout/fragment_search_results.xml" value="0.15896739130434784" />
         <entry key="app/src/main/res/layout/fragment_service_unavailable.xml" value="0.15896739130434784" />
+        <entry key="app/src/main/res/layout/fragment_starting.xml" value="0.1" />
         <entry key="app/src/main/res/layout/image.xml" value="0.15896739130434784" />
         <entry key="app/src/main/res/layout/link.xml" value="0.15896739130434784" />
         <entry key="app/src/main/res/layout/subtitle.xml" value="0.15896739130434784" />
